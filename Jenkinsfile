@@ -34,6 +34,13 @@ pipeline {
             }
          }
       }
+      stage("Tag and Push") {
+         steps {
+                sh "docker tag jenkins-pipeline_web:latest mijinkoo/jenkins-app:${BUILD_NUMBER}"
+                sh "docker login -u mijinkoo -p koomijin104!"
+                sh "docker push mijinkoo/jenkins-app:${BUILD_NUMBER}"
+         }
+      }
       stage("deploy") {
          steps {
             sh "docker-compose up -d"
